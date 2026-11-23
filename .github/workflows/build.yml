@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: unzip -q -o jefzcvt.zip -d proj
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -17,9 +16,9 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - run: gradle -p proj assembleRelease --no-daemon
+      - run: gradle assembleRelease --no-daemon
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
           name: JefzCVT build ${{ github.run_number }}
-          files: proj/app/build/outputs/apk/release/app-release.apk
+          files: app/build/outputs/apk/release/app-release.apk
